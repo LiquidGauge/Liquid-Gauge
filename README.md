@@ -1,4 +1,2 @@
-2048
+Liquid-gauge
 ====
-
-A basic iOS 2048 app
