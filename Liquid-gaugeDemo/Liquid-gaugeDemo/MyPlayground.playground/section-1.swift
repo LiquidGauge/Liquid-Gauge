@@ -1,55 +1,43 @@
-//
-//  LiquidView.swift
-//  Liquid-gaugeDemo
-//
-//  Created by Anas Ait Ali on 02/12/14.
-//  Copyright (c) 2014 thanbeth. All rights reserved.
-//
+// Playground - noun: a place where people can play
 
 import UIKit
 
 class LiquidView: UIView {
-    
+
     var timer: NSTimer?
     var tick: Int = 0
-    var _amplitude: Float = 1.0
-    var _frequency: Float = 1.5
-    var _phase: Float = 0.0
-    let _idleAmplitude: Float = 0.1
-    var pourcentage : Float = 50
+    var _amplitude: Float = 10.0
     
-    var label = UILabel(frame: CGRectMake(30, 30, 100, 30))
-    
-    func initialize() {
-        if ((timer) != nil) {
-            timer!.invalidate()
-        }
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.025, target: self, selector: "update", userInfo: nil, repeats: true)
-        NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "updateProgress", userInfo: nil, repeats: true)
-        label.text = "\(pourcentage)%"
-        self.addSubview(label)
-        self.setNeedsDisplay()
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        initialize()
-    }
-    
-    func updateProgress() {
-        pourcentage = Float(arc4random_uniform(100))
-        label.text = "\(pourcentage)%"
-    }
-    
-    func update() {
-        var requiredTickes = 2
-        tick = (tick+1)%requiredTickes
-        
-        _phase += -0.05
-        if (tick == 0) {
-            self.setNeedsDisplay()
-        }
-    }
+//    func initialize() {
+//        if ((timer) != nil) {
+//            timer!.invalidate()
+//        }
+//        timer = NSTimer(timeInterval: 0.025, target: self, selector: "update", userInfo: nil, repeats: true)
+//        self.setNeedsDisplay()
+//    }
+//    
+//    override init() {
+//        super.init()
+//        initialize()
+//    }
+//    
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        initialize()
+//    }
+//
+//    required init(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    
+//    func update() {
+//        var requiredTickes = 2
+//        tick = (tick+1)%requiredTickes
+//        _amplitude = Float(arc4random_uniform(20))
+//        if (tick == 0) {
+//            self.setNeedsDisplay()
+//        }
+//    }
     
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -72,20 +60,20 @@ class LiquidView: UIView {
         let _density: Float = 5.0
         let _lineWidth: Float = 2.0
         
-        let vPosition: Float = Float(self.bounds.height) * pourcentage / 100.0;
+        let halfHeight: Float = Float(self.bounds.height) / 2.0;
         let width: Float = Float(self.bounds.width) - marginLeft - marginRight;
         let mid: Float = width / 2.0;
         let stepLength = _density / width;
         
         CGContextSetLineWidth(context, CGFloat(_lineWidth))
-        var maxAmplitude: Float = vPosition - Float(2 * _lineWidth)
+        var maxAmplitude: Float = halfHeight - Float(2 * _lineWidth)
         var normedAmplitude: Float = _amplitude
         
         
         UIColor.blueColor().colorWithAlphaComponent(0.5).set()
-        
+
         var curve : CGMutablePathRef = CGPathCreateMutable()
-        CGPathMoveToPoint(curve, nil, CGFloat(marginLeft), CGFloat(vPosition))
+        CGPathMoveToPoint(curve, nil, CGFloat(marginLeft), CGFloat(halfHeight))
         
         var lastX : CGFloat = 0
         var lastY : CGFloat = self.bounds.height / 2.0
@@ -94,7 +82,7 @@ class LiquidView: UIView {
             var scaling: Float = -pow(1/mid*(x-mid),2)+1
             normedAmplitude = 0.1
             
-            var y: Float = scaling * maxAmplitude * normedAmplitude * sinf(2.0 * Float(M_PI) * (x / width) * _frequency + _phase) + vPosition
+            var y: Float = scaling * maxAmplitude * normedAmplitude * sinf(2.0 * Float(M_PI) * (x / width) * 0.1 + 0.0) + halfHeight
             
             CGPathAddLineToPoint(curve, nil, CGFloat(x+marginLeft), CGFloat(y))
             let location: CGFloat = CGFloat(x / (width+_density))
@@ -111,3 +99,4 @@ class LiquidView: UIView {
     }
 }
 
+var liquid = LiquidView(frame: CGRectMake(0, 0, 300, 300))

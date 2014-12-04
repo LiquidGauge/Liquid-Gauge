@@ -38,6 +38,7 @@
 		A86F6A861A2DFACF007C0060 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A86F6A871A2DFACF007C0060 /* Liquid_gaugeDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Liquid_gaugeDemoTests.swift; sourceTree = "<group>"; };
 		A86F6A931A2DFC04007C0060 /* LiquidView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiquidView.swift; sourceTree = "<group>"; };
+		A86F6A951A2E0581007C0060 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +87,7 @@
 				A86F6A781A2DFACE007C0060 /* Images.xcassets */,
 				A86F6A7A1A2DFACE007C0060 /* LaunchScreen.xib */,
 				A86F6A6F1A2DFACE007C0060 /* Supporting Files */,
+				A86F6A951A2E0581007C0060 /* MyPlayground.playground */,
 			);
 			path = "Liquid-gaugeDemo";
 			sourceTree = "<group>";
