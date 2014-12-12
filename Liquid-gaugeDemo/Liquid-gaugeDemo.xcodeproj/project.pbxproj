@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21372F291A3B2BF700846A4B /* GaugeStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21372F281A3B2BF700846A4B /* GaugeStyle.swift */; };
 		A86F6A721A2DFACE007C0060 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F6A711A2DFACE007C0060 /* AppDelegate.swift */; };
 		A86F6A741A2DFACE007C0060 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F6A731A2DFACE007C0060 /* ViewController.swift */; };
 		A86F6A771A2DFACE007C0060 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A86F6A751A2DFACE007C0060 /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		21372F281A3B2BF700846A4B /* GaugeStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GaugeStyle.swift; path = Classes/GaugeStyle.swift; sourceTree = "<group>"; };
 		A86F6A6C1A2DFACE007C0060 /* Liquid-gaugeDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Liquid-gaugeDemo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A86F6A701A2DFACE007C0060 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A86F6A711A2DFACE007C0060 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +61,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		21372F271A3B2BA100846A4B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				21372F281A3B2BF700846A4B /* GaugeStyle.swift */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
 		A86F6A631A2DFACE007C0060 = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +130,7 @@
 		A86F6A911A2DFB24007C0060 /* Liquid-gauge */ = {
 			isa = PBXGroup;
 			children = (
+				21372F271A3B2BA100846A4B /* Classes */,
 				A86F6A921A2DFB24007C0060 /* Views */,
 			);
 			name = "Liquid-gauge";
@@ -235,6 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A86F6A941A2DFC04007C0060 /* LiquidView.swift in Sources */,
+				21372F291A3B2BF700846A4B /* GaugeStyle.swift in Sources */,
 				A86F6A741A2DFACE007C0060 /* ViewController.swift in Sources */,
 				A86F6A721A2DFACE007C0060 /* AppDelegate.swift in Sources */,
 			);
@@ -430,6 +442,7 @@
 				A86F6A8D1A2DFACF007C0060 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A86F6A8E1A2DFACF007C0060 /* Build configuration list for PBXNativeTarget "Liquid-gaugeDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -438,6 +451,7 @@
 				A86F6A901A2DFACF007C0060 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
