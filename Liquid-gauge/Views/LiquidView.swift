@@ -25,7 +25,8 @@ class LiquidView: UIView {
             timer!.invalidate()
         }
         timer = NSTimer.scheduledTimerWithTimeInterval(0.025, target: self, selector: "update", userInfo: nil, repeats: true)
-        NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "updateProgress", userInfo: nil, repeats: true)
+//        NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "updateProgress", userInfo: nil, repeats: true)
+        pourcentage = 68
         label.text = "\(pourcentage)%"
         self.addSubview(label)
         self.setNeedsDisplay()
@@ -45,7 +46,8 @@ class LiquidView: UIView {
         var requiredTickes = 2
         tick = (tick+1)%requiredTickes
         
-        _phase += -0.05
+        _phase += -Float(arc4random_uniform(150))/1000
+//        _phase += -0.05
         if (tick == 0) {
             self.setNeedsDisplay()
         }
@@ -72,7 +74,7 @@ class LiquidView: UIView {
         let _density: Float = 5.0
         let _lineWidth: Float = 2.0
         
-        let vPosition: Float = Float(self.bounds.height) * pourcentage / 100.0;
+        let vPosition: Float = Float(self.bounds.height) - (Float(self.bounds.height) * pourcentage / 100.0);
         let width: Float = Float(self.bounds.width) - marginLeft - marginRight;
         let mid: Float = width / 2.0;
         let stepLength = _density / width;
@@ -92,7 +94,7 @@ class LiquidView: UIView {
         for (var x:Float = 0;x<width+_density; x+=_density) {
             CGContextMoveToPoint(context, lastX, lastY)
             var scaling: Float = -pow(1/mid*(x-mid),2)+1
-            normedAmplitude = 0.1
+            normedAmplitude = 0.05
             
             var y: Float = scaling * maxAmplitude * normedAmplitude * sinf(2.0 * Float(M_PI) * (x / width) * _frequency + _phase) + vPosition
             
