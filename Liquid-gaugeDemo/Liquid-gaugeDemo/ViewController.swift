@@ -21,17 +21,21 @@ class ViewController: UIViewController, LiquidViewDelegate, LiquidViewDatasource
     var gaugeValue:Float = 50.0
     
     @IBOutlet weak var maskOne: UIImageView!
+    @IBOutlet weak var maskTwo: UIImageView!
     
     @IBAction func noMaskTouch(sender: AnyObject) {
         maskOne.alpha = 0.0
+        maskTwo.alpha = 0.0
     }
     
     @IBAction func maskOneTouch(sender: AnyObject) {
         maskOne.alpha = 1.0
+        maskTwo.alpha = 0.0
     }
     
     @IBAction func maskTwoTouch(sender: AnyObject) {
         maskOne.alpha = 0.0
+        maskTwo.alpha = 1.0
     }
     
     override func viewDidLoad() {

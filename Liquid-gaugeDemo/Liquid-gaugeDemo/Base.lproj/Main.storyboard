@@ -25,7 +25,10 @@
                                     <constraint firstAttribute="width" secondItem="RKb-Zo-Bgi" secondAttribute="height" multiplier="1:1" id="sXN-gh-fom"/>
                                 </constraints>
                             </view>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="mask" translatesAutoresizingMaskIntoConstraints="NO" id="TBM-G4-cF7">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="maskOne" translatesAutoresizingMaskIntoConstraints="NO" id="TBM-G4-cF7">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.0" contentMode="scaleToFill" image="maskTwo" translatesAutoresizingMaskIntoConstraints="NO" id="BfC-kY-qPi" userLabel="maskTwo">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="1R2-gs-C3h">
@@ -102,6 +105,8 @@
                             <constraint firstItem="xw9-xm-nAh" firstAttribute="height" secondItem="9j9-pf-5JX" secondAttribute="height" id="GVf-58-nGP"/>
                             <constraint firstItem="TBM-G4-cF7" firstAttribute="centerX" secondItem="RKb-Zo-Bgi" secondAttribute="centerX" id="Gkx-xR-hT9"/>
                             <constraint firstItem="03S-1a-pzO" firstAttribute="leading" secondItem="9j9-pf-5JX" secondAttribute="trailing" constant="8" id="IPy-em-ZaW"/>
+                            <constraint firstItem="RKb-Zo-Bgi" firstAttribute="centerY" secondItem="BfC-kY-qPi" secondAttribute="centerY" id="KBG-kq-plr"/>
+                            <constraint firstItem="RKb-Zo-Bgi" firstAttribute="centerX" secondItem="BfC-kY-qPi" secondAttribute="centerX" id="NiX-dO-5dE"/>
                             <constraint firstItem="xw9-xm-nAh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="PIF-rN-ky4"/>
                             <constraint firstItem="xw9-xm-nAh" firstAttribute="centerY" secondItem="9j9-pf-5JX" secondAttribute="centerY" id="QNf-lH-P8y"/>
                             <constraint firstItem="PY7-eL-Dcb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="S7F-js-EH0"/>
@@ -111,6 +116,7 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="1R2-gs-C3h" secondAttribute="bottom" constant="20" id="Xj4-8K-Ic6"/>
                             <constraint firstItem="RKb-Zo-Bgi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ZBu-ee-Pwe"/>
                             <constraint firstItem="TBM-G4-cF7" firstAttribute="centerX" secondItem="9j9-pf-5JX" secondAttribute="centerX" id="b5D-b2-Fsy"/>
+                            <constraint firstItem="RKb-Zo-Bgi" firstAttribute="width" secondItem="BfC-kY-qPi" secondAttribute="width" id="bzr-7d-pTe"/>
                             <constraint firstAttribute="trailing" secondItem="RKb-Zo-Bgi" secondAttribute="trailing" id="cAe-Uu-mEf"/>
                             <constraint firstItem="TBM-G4-cF7" firstAttribute="width" secondItem="RKb-Zo-Bgi" secondAttribute="width" id="mW6-gx-bzy"/>
                             <constraint firstItem="1R2-gs-C3h" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="maN-RK-ZtE"/>
@@ -119,11 +125,13 @@
                             <constraint firstItem="TBM-G4-cF7" firstAttribute="height" secondItem="RKb-Zo-Bgi" secondAttribute="height" id="vI3-UN-5An"/>
                             <constraint firstAttribute="trailingMargin" secondItem="1R2-gs-C3h" secondAttribute="trailing" constant="20" id="yl9-jH-YrM"/>
                             <constraint firstItem="QTR-0o-1Nd" firstAttribute="top" secondItem="PY7-eL-Dcb" secondAttribute="bottom" constant="8" id="z9J-kR-wOx"/>
+                            <constraint firstItem="RKb-Zo-Bgi" firstAttribute="height" secondItem="BfC-kY-qPi" secondAttribute="height" id="zye-SZ-SwW"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="liquidView" destination="RKb-Zo-Bgi" id="Azs-PW-63S"/>
                         <outlet property="maskOne" destination="TBM-G4-cF7" id="f0e-46-5k6"/>
+                        <outlet property="maskTwo" destination="BfC-kY-qPi" id="lGQ-b1-r6z"/>
                         <outlet property="textValue" destination="QTR-0o-1Nd" id="2eF-5g-XoT"/>
                     </connections>
                 </viewController>
@@ -132,6 +140,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="mask" width="302" height="290"/>
+        <image name="maskOne" width="302" height="290"/>
+        <image name="maskTwo" width="302" height="290"/>
     </resources>
 </document>
