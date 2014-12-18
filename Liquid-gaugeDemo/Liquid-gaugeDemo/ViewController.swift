@@ -44,6 +44,14 @@ class ViewController: UIViewController, LiquidViewDelegate, LiquidViewDatasource
         liquidView.datasource = self
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        liquidView.startMotionDetect()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        liquidView.stopMotionDetect()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

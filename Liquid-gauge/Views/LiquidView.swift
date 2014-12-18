@@ -61,7 +61,7 @@ class LiquidView: UIView {
     // MARK: Motion manager
     lazy var motionManager: CMMotionManager = {
         let motion = CMMotionManager()
-        motion.gyroUpdateInterval = 0.4
+        motion.gyroUpdateInterval = 0.1
         return motion
         }()
     // We store the accelerometer data to reuse later
@@ -108,7 +108,7 @@ class LiquidView: UIView {
     //MARK: - Life cycle
     func initialize() {
         // Starting accelerometer detection
-        startMotionDetect()
+//        startMotionDetect() // We should let the user start motion dectection when he needs to -> save battery
 
         // Redo timers
         invalidateTimer(&timerRedraw)
@@ -224,6 +224,10 @@ class LiquidView: UIView {
                 self.accelerometer = accelerometerData
             }
         })
+    }
+    
+    func stopMotionDetect() {
+        self.motionManager.stopGyroUpdates()
     }
     
     //MARK: - Utils
