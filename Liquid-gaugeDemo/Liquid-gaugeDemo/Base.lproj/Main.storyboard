@@ -24,12 +24,19 @@
                                     <constraint firstAttribute="width" secondItem="RKb-Zo-Bgi" secondAttribute="height" multiplier="1:1" id="sXN-gh-fom"/>
                                 </constraints>
                             </view>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="mask" translatesAutoresizingMaskIntoConstraints="NO" id="TBM-G4-cF7">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="RKb-Zo-Bgi" secondAttribute="centerY" id="CdQ-11-LCN"/>
+                            <constraint firstItem="TBM-G4-cF7" firstAttribute="centerY" secondItem="RKb-Zo-Bgi" secondAttribute="centerY" id="GRt-lc-EA7"/>
+                            <constraint firstItem="TBM-G4-cF7" firstAttribute="height" secondItem="RKb-Zo-Bgi" secondAttribute="height" id="NDb-4V-BTP"/>
+                            <constraint firstItem="TBM-G4-cF7" firstAttribute="width" secondItem="RKb-Zo-Bgi" secondAttribute="width" id="W0H-S4-vT5"/>
                             <constraint firstItem="RKb-Zo-Bgi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ZBu-ee-Pwe"/>
                             <constraint firstAttribute="trailing" secondItem="RKb-Zo-Bgi" secondAttribute="trailing" id="cAe-Uu-mEf"/>
+                            <constraint firstItem="TBM-G4-cF7" firstAttribute="centerX" secondItem="RKb-Zo-Bgi" secondAttribute="centerX" id="czh-6G-lSR"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -37,4 +44,7 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="mask" width="302" height="290"/>
+    </resources>
 </document>
