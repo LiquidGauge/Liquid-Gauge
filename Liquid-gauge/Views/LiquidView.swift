@@ -57,7 +57,7 @@ class LiquidView: UIView {
 
     //MARK: Waves User controlled values
     // Percentage inside the gauge
-    var percentage:Float = 50
+    var percent:Float = 50
     // MARK: Motion manager
     lazy var motionManager: CMMotionManager = {
         let motion = CMMotionManager()
@@ -159,7 +159,7 @@ class LiquidView: UIView {
 
         
         if (self.datasource != nil) {
-            self.percentage = datasource!.gaugeValue(self)
+            self.percent = datasource!.gaugeValue(self)
             if (self.datasourceRespondTo.waveFrequency) {
                 self._frequency = self.datasource!.waveFrequency!(self)
             }
@@ -170,7 +170,7 @@ class LiquidView: UIView {
         }
         
         // constant calculated according to drawing constant (For future more scalable use)
-        let vPosition: Float = Float(self.bounds.height) - (Float(self.bounds.height) * percentage / 100.0);
+        let vPosition: Float = Float(self.bounds.height) - (Float(self.bounds.height) * percent / 100.0);
         let width: Float = Float(self.bounds.width) - marginLeft - marginRight;
         let mid: Float = width / 2.0;
         let stepLength = _density / width;
@@ -180,7 +180,7 @@ class LiquidView: UIView {
         let normedAmplitude: Float = _amplitude
 
         if (self.delegate != nil && self.delegateRespondTo.liquidViewColorForPercent) {
-            self.color = (delegate!.liquidView!(self, colorForPercent: percentage))
+            self.color = (delegate!.liquidView!(self, colorForPercent: percent))
         }
         
         color.colorWithAlphaComponent(0.5).set()
