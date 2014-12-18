@@ -9,6 +9,29 @@
 import UIKit
 import CoreMotion
 
+//MARK: - LiquidView Delegate
+@objc protocol LiquidViewDelegate : NSObjectProtocol {
+    
+    // Return a color depending on the pencent value of the gauge
+    optional func liquidView(liquidView: LiquidView, colorForPencent percent:Float) -> UIColor!
+    
+}
+
+//MARK: - LiquidView Datasource
+@objc protocol LiquidViewDatasource : NSObjectProtocol {
+    
+    // Frequency of the liquid's waves
+    optional func waveFrequency(liquidView: LiquidView) -> Float
+  
+    // Size of the waves
+    optional func waveAmplitude(liquidView: LiquidView) -> Float
+    
+    // Current value of the gauge in percent (%)
+    func gaugeValue(liquidView: LiquidView) -> Float
+    
+}
+
+//MARK: -LiquidView Class
 class LiquidView: UIView {
 
     //MARK: - Variables
@@ -24,11 +47,13 @@ class LiquidView: UIView {
     // Limit refresh display and drawing, for performance
     var tick: Int = 0
     // Waves amplitude
-    let _amplitude:Float = 0.1
+    var _amplitude:Float = 0.1
     // Waves frequency
-    let _frequency:Float = 1.5
+    var _frequency:Float = 1.5
     // The phases of the wave.
     var _phase:Float = 0.0
+    // The color of the the liquid
+    var color:UIColor = UIColor.blueColor()
 
     //MARK: Waves User controlled values
     // Percentage inside the gauge
@@ -43,6 +68,38 @@ class LiquidView: UIView {
     //MARK: concurential acces
     let lockQueue = dispatch_queue_create("com.test.accelerometerLock", nil)
 
+    //MARK: - Delegate
+    var delegate:LiquidViewDelegate? = nil {
+        willSet (value) {
+            if (value != nil) {
+                delegateRespondTo.liquidViewColorForPercent = value!.respondsToSelector(Selector("liquidView:colorForPercent:"))
+            }
+        }
+    }
+    
+    struct delegateMethodCaching {
+        var liquidViewColorForPercent:Bool = false
+    }
+    var delegateRespondTo:delegateMethodCaching = delegateMethodCaching()
+
+    //MARK: - Datasource
+    var datasource:LiquidViewDatasource? = nil {
+        willSet (newValue) {
+            if (newValue != nil) {
+                datasourceRespondTo.waveFrequency = newValue!.respondsToSelector(Selector("waveFrenquency:"))
+                datasourceRespondTo.waveAmplitude = newValue!.respondsToSelector(Selector("waveAmplitude:"))
+                datasourceRespondTo.gagugeValue = newValue!.respondsToSelector(Selector("gaugeValue:"))
+            }
+        }
+    }
+
+    struct datasourceMethodsCaching {
+        var waveFrequency:Bool = false
+        var waveAmplitude:Bool = false
+        var gagugeValue:Bool = false
+    }
+    var datasourceRespondTo:datasourceMethodsCaching = datasourceMethodsCaching()
+    
     //MARK: - Methods
     //MARK: - Life cycle
     func initialize() {
@@ -97,6 +154,18 @@ class LiquidView: UIView {
         let _density: Float = 5.0
         let _lineWidth: Float = 2.0
 
+        
+        if (self.datasource != nil) {
+            self.percentage = datasource!.gaugeValue(self)
+            if (self.datasourceRespondTo.waveFrequency) {
+                self._frequency = self.datasource!.waveFrequency!(self)
+            }
+            if (self.datasourceRespondTo.waveAmplitude) {
+                self._amplitude = self.datasource!.waveAmplitude!(self)
+            }
+            
+        }
+        
         // constant calculated according to drawing constant (For future more scalable use)
         let vPosition: Float = Float(self.bounds.height) - (Float(self.bounds.height) * percentage / 100.0);
         let width: Float = Float(self.bounds.width) - marginLeft - marginRight;
@@ -107,7 +176,11 @@ class LiquidView: UIView {
         let maxAmplitude: Float = vPosition - Float(2 * _lineWidth)
         let normedAmplitude: Float = _amplitude
 
-        UIColor.blueColor().colorWithAlphaComponent(0.5).set()
+        if (self.delegate != nil && self.delegateRespondTo.liquidViewColorForPercent) {
+            self.color = (delegate!.liquidView!(self, colorForPencent: percentage))
+        }
+        
+        color.colorWithAlphaComponent(0.5).set()
 
         let curve : CGMutablePathRef = CGPathCreateMutable()
         CGPathMoveToPoint(curve, nil, CGFloat(marginLeft), CGFloat(vPosition))

@@ -24,26 +24,4 @@ class GaugeStyleAndBehavior: NSObject {
 
 }
 
-//MARK: - LiquidView Delegate
-@objc protocol LiquidViewDelegate : NSObjectProtocol {
-    
-    // Return a color depending on the pencent value of the gauge
-    optional func liquidView(liquidView: LiquidView, colorForPencent percent:Int) -> UIColor
-    
-}
-
-//MARK: - LiquidView Datasource
-@objc protocol LiquidViewDatasource : NSObjectProtocol {
-    
-    // Frequency of the liquid's waves
-    func waveFrequency() -> Int
-  
-    // Size of the waves
-    func waveAmplitude() -> Int
-    
-    // Current value of the gauge in percent (%)
-    func gaugeValue() -> Int
-    
-}
-
 
