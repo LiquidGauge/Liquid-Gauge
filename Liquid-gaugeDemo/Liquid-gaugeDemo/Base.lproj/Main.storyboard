@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -19,7 +20,6 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RKb-Zo-Bgi" customClass="LiquidView" customModule="Liquid_gaugeDemo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" red="1" green="0.93684169650000004" blue="0.60267666360000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="RKb-Zo-Bgi" secondAttribute="height" multiplier="1:1" id="sXN-gh-fom"/>
                                 </constraints>
@@ -27,18 +27,56 @@
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="mask" translatesAutoresizingMaskIntoConstraints="NO" id="TBM-G4-cF7">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="1R2-gs-C3h">
+                                <rect key="frame" x="34" y="550" width="532" height="31"/>
+                                <connections>
+                                    <action selector="valueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="lAG-qg-apr"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LiquidView Demo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PY7-eL-Dcb">
+                                <rect key="frame" x="36" y="40" width="528" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="u0R-rj-IrN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50 %" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QTR-0o-1Nd">
+                                <rect key="frame" x="36" y="69" width="528" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="khc-nO-hbP"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="QTR-0o-1Nd" firstAttribute="width" secondItem="PY7-eL-Dcb" secondAttribute="width" id="0Dn-5u-7TN"/>
+                            <constraint firstItem="QTR-0o-1Nd" firstAttribute="height" secondItem="PY7-eL-Dcb" secondAttribute="height" id="7g2-Aa-eL9"/>
                             <constraint firstAttribute="centerY" secondItem="RKb-Zo-Bgi" secondAttribute="centerY" id="CdQ-11-LCN"/>
-                            <constraint firstItem="TBM-G4-cF7" firstAttribute="centerY" secondItem="RKb-Zo-Bgi" secondAttribute="centerY" id="GRt-lc-EA7"/>
-                            <constraint firstItem="TBM-G4-cF7" firstAttribute="height" secondItem="RKb-Zo-Bgi" secondAttribute="height" id="NDb-4V-BTP"/>
-                            <constraint firstItem="TBM-G4-cF7" firstAttribute="width" secondItem="RKb-Zo-Bgi" secondAttribute="width" id="W0H-S4-vT5"/>
+                            <constraint firstItem="TBM-G4-cF7" firstAttribute="centerY" secondItem="RKb-Zo-Bgi" secondAttribute="centerY" id="Clm-GC-FBv"/>
+                            <constraint firstItem="QTR-0o-1Nd" firstAttribute="centerX" secondItem="PY7-eL-Dcb" secondAttribute="centerX" id="Fgd-S6-Vh0"/>
+                            <constraint firstItem="TBM-G4-cF7" firstAttribute="centerX" secondItem="RKb-Zo-Bgi" secondAttribute="centerX" id="Gkx-xR-hT9"/>
+                            <constraint firstItem="PY7-eL-Dcb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="S7F-js-EH0"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="1R2-gs-C3h" secondAttribute="bottom" constant="20" id="Xj4-8K-Ic6"/>
                             <constraint firstItem="RKb-Zo-Bgi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ZBu-ee-Pwe"/>
                             <constraint firstAttribute="trailing" secondItem="RKb-Zo-Bgi" secondAttribute="trailing" id="cAe-Uu-mEf"/>
-                            <constraint firstItem="TBM-G4-cF7" firstAttribute="centerX" secondItem="RKb-Zo-Bgi" secondAttribute="centerX" id="czh-6G-lSR"/>
+                            <constraint firstItem="TBM-G4-cF7" firstAttribute="width" secondItem="RKb-Zo-Bgi" secondAttribute="width" id="mW6-gx-bzy"/>
+                            <constraint firstItem="1R2-gs-C3h" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="maN-RK-ZtE"/>
+                            <constraint firstItem="PY7-eL-Dcb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="sM3-x6-lwa"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="PY7-eL-Dcb" secondAttribute="trailing" constant="20" id="sqq-cJ-cca"/>
+                            <constraint firstItem="TBM-G4-cF7" firstAttribute="height" secondItem="RKb-Zo-Bgi" secondAttribute="height" id="vI3-UN-5An"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1R2-gs-C3h" secondAttribute="trailing" constant="20" id="yl9-jH-YrM"/>
+                            <constraint firstItem="QTR-0o-1Nd" firstAttribute="top" secondItem="PY7-eL-Dcb" secondAttribute="bottom" constant="8" id="z9J-kR-wOx"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="liquidView" destination="RKb-Zo-Bgi" id="Azs-PW-63S"/>
+                        <outlet property="textValue" destination="QTR-0o-1Nd" id="2eF-5g-XoT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

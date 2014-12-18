@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F6C80941A42E0C400D80ED3 /* configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = 1F6C80931A42E0C400D80ED3 /* configuration.json */; };
 		21372F291A3B2BF700846A4B /* GaugeStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21372F281A3B2BF700846A4B /* GaugeStyle.swift */; };
 		A86F6A721A2DFACE007C0060 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F6A711A2DFACE007C0060 /* AppDelegate.swift */; };
 		A86F6A741A2DFACE007C0060 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F6A731A2DFACE007C0060 /* ViewController.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F6C80931A42E0C400D80ED3 /* configuration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = configuration.json; sourceTree = "<group>"; };
 		21372F281A3B2BF700846A4B /* GaugeStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GaugeStyle.swift; path = Classes/GaugeStyle.swift; sourceTree = "<group>"; };
 		A86F6A6C1A2DFACE007C0060 /* Liquid-gaugeDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Liquid-gaugeDemo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A86F6A701A2DFACE007C0060 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				A86F6A701A2DFACE007C0060 /* Info.plist */,
+				1F6C80931A42E0C400D80ED3 /* configuration.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 			files = (
 				A86F6A771A2DFACE007C0060 /* Main.storyboard in Resources */,
 				A86F6A7C1A2DFACE007C0060 /* LaunchScreen.xib in Resources */,
+				1F6C80941A42E0C400D80ED3 /* configuration.json in Resources */,
 				A86F6A791A2DFACE007C0060 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
