@@ -14,8 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var textValue: UILabel!
     @IBAction func valueChanged(sender: AnyObject) {
         var slider = sender as UISlider
-        liquidView.pourcentage = round(slider.value * 100)
-        textValue.text = "\(liquidView.pourcentage) %"
+        liquidView.percentage = round(slider.value * 100)
+        textValue.text = "\(liquidView.percentage) %"
     }
     
     override func viewDidLoad() {
