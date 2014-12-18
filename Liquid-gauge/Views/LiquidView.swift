@@ -35,7 +35,7 @@ import CoreMotion
 class LiquidView: UIView {
 
     //MARK: - Variables
-    //MARK: Timers
+    //MARK: - Timers
     // Timer used for update drawing
     var timerRedraw: NSTimer? = nil
     let refreshRedrawInterval:NSTimeInterval = 0.025
@@ -59,7 +59,11 @@ class LiquidView: UIView {
     // Percentage inside the gauge
     var percentage:Float = 50
     // MARK: Motion manager
-    let motionManager:CMMotionManager = CMMotionManager()
+    lazy var motionManager: CMMotionManager = {
+        let motion = CMMotionManager()
+        motion.gyroUpdateInterval = 0.4
+        return motion
+        }()
     // We store the accelerometer data to reuse later
     var accelerometer:CMAccelerometerData? = nil
     // We store the angle constant (This is calculated by the timerAccelerometer callback and used during drawing)
@@ -122,7 +126,7 @@ class LiquidView: UIView {
 
     //MARK: - Drawing
     func updateDrawing() {
-        let requiredTickes = 2
+        let requiredTickes = 4
         tick = (tick+1)%requiredTickes
         
         _phase += -Float(arc4random_uniform(150))/1000
