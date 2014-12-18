@@ -13,7 +13,7 @@ import CoreMotion
 @objc protocol LiquidViewDelegate : NSObjectProtocol {
     
     // Return a color depending on the pencent value of the gauge
-    optional func liquidView(liquidView: LiquidView, colorForPencent percent:Float) -> UIColor!
+    optional func liquidView(liquidView: LiquidView, colorForPercent percent:Float) -> UIColor!
     
 }
 
@@ -57,7 +57,7 @@ class LiquidView: UIView {
 
     //MARK: Waves User controlled values
     // Percentage inside the gauge
-    var percentage:Float = 0
+    var percentage:Float = 50
     // MARK: Motion manager
     let motionManager:CMMotionManager = CMMotionManager()
     // We store the accelerometer data to reuse later
@@ -71,8 +71,8 @@ class LiquidView: UIView {
     //MARK: - Delegate
     var delegate:LiquidViewDelegate? = nil {
         willSet (value) {
-            if (value != nil) {
-                delegateRespondTo.liquidViewColorForPercent = value!.respondsToSelector(Selector("liquidView:colorForPercent:"))
+            if (value != nil && value!.respondsToSelector(Selector("liquidView:colorForPercent:"))) {
+                delegateRespondTo.liquidViewColorForPercent = true
             }
         }
     }
@@ -86,7 +86,7 @@ class LiquidView: UIView {
     var datasource:LiquidViewDatasource? = nil {
         willSet (newValue) {
             if (newValue != nil) {
-                datasourceRespondTo.waveFrequency = newValue!.respondsToSelector(Selector("waveFrenquency:"))
+                datasourceRespondTo.waveFrequency = newValue!.respondsToSelector(Selector("waveFrequency:"))
                 datasourceRespondTo.waveAmplitude = newValue!.respondsToSelector(Selector("waveAmplitude:"))
                 datasourceRespondTo.gagugeValue = newValue!.respondsToSelector(Selector("gaugeValue:"))
             }
@@ -111,7 +111,6 @@ class LiquidView: UIView {
         invalidateTimer(&timerAccelerometer)
         timerRedraw = NSTimer.scheduledTimerWithTimeInterval(refreshRedrawInterval, target: self, selector: "updateDrawing", userInfo: nil, repeats: true)
         timerAccelerometer = NSTimer.scheduledTimerWithTimeInterval(refreshUpdateAccelerometerInterval, target: self, selector: "calcAngleConstant", userInfo: nil, repeats: true)
-        percentage = 68
 
         self.setNeedsDisplay()
     }
@@ -177,7 +176,7 @@ class LiquidView: UIView {
         let normedAmplitude: Float = _amplitude
 
         if (self.delegate != nil && self.delegateRespondTo.liquidViewColorForPercent) {
-            self.color = (delegate!.liquidView!(self, colorForPencent: percentage))
+            self.color = (delegate!.liquidView!(self, colorForPercent: percentage))
         }
         
         color.colorWithAlphaComponent(0.5).set()

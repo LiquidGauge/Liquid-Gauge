@@ -60,6 +60,9 @@
                                 <state key="normal" title="Mask 1">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="maskOneTouch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eAp-mb-fNQ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xw9-xm-nAh">
                                 <rect key="frame" x="16" y="480" width="185" height="30"/>
@@ -69,6 +72,9 @@
                                 <state key="normal" title="No Mask">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="noMaskTouch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aNN-aZ-n1J"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="03S-1a-pzO">
                                 <rect key="frame" x="407" y="480" width="193" height="30"/>
@@ -78,6 +84,9 @@
                                 <state key="normal" title="Mask 2">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="maskTwoTouch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CWs-fJ-4bg"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -114,6 +123,7 @@
                     </view>
                     <connections>
                         <outlet property="liquidView" destination="RKb-Zo-Bgi" id="Azs-PW-63S"/>
+                        <outlet property="maskOne" destination="TBM-G4-cF7" id="f0e-46-5k6"/>
                         <outlet property="textValue" destination="QTR-0o-1Nd" id="2eF-5g-XoT"/>
                     </connections>
                 </viewController>

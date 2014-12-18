@@ -20,6 +20,20 @@ class ViewController: UIViewController, LiquidViewDelegate, LiquidViewDatasource
     
     var gaugeValue:Float = 50.0
     
+    @IBOutlet weak var maskOne: UIImageView!
+    
+    @IBAction func noMaskTouch(sender: AnyObject) {
+        maskOne.alpha = 0.0
+    }
+    
+    @IBAction func maskOneTouch(sender: AnyObject) {
+        maskOne.alpha = 1.0
+    }
+    
+    @IBAction func maskTwoTouch(sender: AnyObject) {
+        maskOne.alpha = 0.0
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         liquidView.delegate = self
@@ -46,7 +60,7 @@ class ViewController: UIViewController, LiquidViewDelegate, LiquidViewDatasource
     }
     
     //MARK: - LiquidView Delegate
-    func liquidView(liquidView: LiquidView, colorForPencent percent: Float) -> UIColor! {
+    func liquidView(liquidView: LiquidView, colorForPercent percent: Float) -> UIColor! {
         
         var res = UIColor.greenColor()
         
