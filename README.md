@@ -151,6 +151,7 @@ Requirements
 This project require :
 
 + ```iOS7```
++ ```Swift```
 
 Licence
 ----------------
