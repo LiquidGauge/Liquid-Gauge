@@ -9,7 +9,7 @@ The liquid view has fully customizable appearance and behavior. (See configurati
 
 The view should be used with a **mask** in front of it to simulate the container.
 
-![Demo](/Screenshots/gauge.png "Liquid Gauge")
+![Demo](/Screenshots/gauge.png?raw=true "Liquid Gauge")
 
 ScreenShots
 ----------------
