@@ -140,7 +140,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="maskOne" width="302" height="290"/>
-        <image name="maskTwo" width="302" height="290"/>
+        <image name="maskOne" width="906" height="870"/>
+        <image name="maskTwo" width="906" height="870"/>
     </resources>
 </document>
