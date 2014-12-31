@@ -67,7 +67,14 @@ class LiquidView: UIView {
     // We store the accelerometer data to reuse later
     var accelerometer:CMAccelerometerData? = nil
     // We store the angle constant (This is calculated by the timerAccelerometer callback and used during drawing)
-    var angleConstant:Float = 0.0
+    var angleConstant:Float = 0.0 {
+        willSet (newValue) {
+            drawingAngleConstant = angleConstant
+            toAdd = (newValue - angleConstant) / 1000.0
+        }
+    }
+    var drawingAngleConstant:Float = 0.0
+    var toAdd:Float = 0.0
 
     //MARK: concurential acces
     let lockQueue = dispatch_queue_create("com.test.accelerometerLock", nil)
@@ -128,8 +135,16 @@ class LiquidView: UIView {
     func updateDrawing() {
         let requiredTickes = 4
         tick = (tick+1)%requiredTickes
-        
         _phase += -Float(arc4random_uniform(150))/1000
+
+//30 - 31 = 1
+//21 - 20 = 1
+//5
+        var isNearlyEqual = abs(self.angleConstant - self.drawingAngleConstant)
+        if (isNearlyEqual >= 0 && isNearlyEqual <= toAdd) {
+            self.drawingAngleConstant += toAdd
+        }
+
         if (tick == 0) {
             self.setNeedsDisplay()
         }
@@ -195,7 +210,7 @@ class LiquidView: UIView {
 
         for (var x:Float = 0;x<width+_density; x+=_density) {
 
-            let currentPointYOffset = (Float(midPoint) - Float(x)) * Float(angleConstant)
+            let currentPointYOffset = (Float(midPoint) - Float(x)) * Float(drawingAngleConstant)
 
             CGContextMoveToPoint(context, lastX, lastY)
             let scaling: Float = -pow(1/mid*(x-mid),2)+1
@@ -234,19 +249,22 @@ class LiquidView: UIView {
     func calcAngleConstant() {
         dispatch_sync(lockQueue) {
             if (self.accelerometer != nil) {
+                if (Int(round(abs(self.accelerometer!.acceleration.z))) == 1) {
+//                    return;
+                    //return slowly to "normal" state
+                    self.angleConstant = 0.0
+                    return
+                }
+
                 var multiplier:Float = 1.0
                 if (self.accelerometer!.acceleration.x < 0) {
                     multiplier = -1.0
                 }
 
-                self.angleConstant = Float(abs(self.accelerometer!.acceleration.y)) * Float(100.0)
-                var intConstant = Int(self.angleConstant)
+                var tmp = Float(abs(self.accelerometer!.acceleration.y)) * Float(100.0)
+                var intConstant = Int(tmp)
                 self.angleConstant =  (1 - (Float(intConstant) / 100))  * multiplier
 
-                // If device is parralel to the ground, cancel the rotation
-                if (Int(round(abs(self.accelerometer!.acceleration.z))) == 1) {
-                    self.angleConstant = 0.0
-                }
             }
         }
     }
