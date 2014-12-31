@@ -70,7 +70,7 @@ class LiquidView: UIView {
         willSet (newValue) {
             if (newValue != angleConstant) {
                 self.drawingAngleConstant = self.angleConstant
-                self.toAdd = (newValue - self.angleConstant) / 1000.0
+                self.toAdd = (newValue - self.angleConstant) / 10.0
             }
         }
     }
@@ -248,7 +248,6 @@ class LiquidView: UIView {
         dispatch_sync(lockQueue) {
             if (self.accelerometer != nil) {
                 if (Int(round(abs(self.accelerometer!.acceleration.z))) == 1) {
-//                    return;
                     //return slowly to "normal" state
                     self.angleConstant = 0.0
                     return
