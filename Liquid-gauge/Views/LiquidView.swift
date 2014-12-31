@@ -14,7 +14,6 @@ import CoreMotion
     
     // Return a color depending on the pencent value of the gauge
     optional func liquidView(liquidView: LiquidView, colorForPercent percent:Float) -> UIColor!
-    
 }
 
 //MARK: - LiquidView Datasource
@@ -69,8 +68,10 @@ class LiquidView: UIView {
     // We store the angle constant (This is calculated by the timerAccelerometer callback and used during drawing)
     var angleConstant:Float = 0.0 {
         willSet (newValue) {
-            drawingAngleConstant = angleConstant
-            toAdd = (newValue - angleConstant) / 1000.0
+            if (newValue != angleConstant) {
+                self.drawingAngleConstant = self.angleConstant
+                self.toAdd = (newValue - self.angleConstant) / 1000.0
+            }
         }
     }
     var drawingAngleConstant:Float = 0.0
@@ -137,9 +138,6 @@ class LiquidView: UIView {
         tick = (tick+1)%requiredTickes
         _phase += -Float(arc4random_uniform(150))/1000
 
-//30 - 31 = 1
-//21 - 20 = 1
-//5
         var isNearlyEqual = abs(self.angleConstant - self.drawingAngleConstant)
         if (isNearlyEqual >= 0 && isNearlyEqual <= toAdd) {
             self.drawingAngleConstant += toAdd
@@ -264,7 +262,6 @@ class LiquidView: UIView {
                 var tmp = Float(abs(self.accelerometer!.acceleration.y)) * Float(100.0)
                 var intConstant = Int(tmp)
                 self.angleConstant =  (1 - (Float(intConstant) / 100))  * multiplier
-
             }
         }
     }
