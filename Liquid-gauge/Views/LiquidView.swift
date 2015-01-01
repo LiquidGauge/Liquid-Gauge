@@ -189,7 +189,8 @@ class LiquidView: UIView {
         let stepLength = _density / width;
 
         CGContextSetLineWidth(context, CGFloat(_lineWidth))
-        let maxAmplitude: Float = vPosition - Float(2 * _lineWidth)
+        let maxAmplitudePosition = (percent >= 50) ? vPosition : abs(vPosition - Float(self.bounds.height))
+        let maxAmplitude: Float =  maxAmplitudePosition - Float(2 * _lineWidth)
         let normedAmplitude: Float = _amplitude
 
         if (self.delegate != nil && self.delegateRespondTo.liquidViewColorForPercent) {
