@@ -24,10 +24,12 @@ import CoreMotion
   
     // Size of the waves
     optional func waveAmplitude(liquidView: LiquidView) -> Float
+
+    // Number of waves
+    optional func numberOfWaves(liquidView: LiquidView) -> Int
     
     // Current value of the gauge in percent (%)
     func gaugeValue(liquidView: LiquidView) -> Float
-    
 }
 
 //MARK: -LiquidView Class
@@ -53,6 +55,8 @@ class LiquidView: UIView {
     var _phase:Float = 0.0
     // The color of the the liquid
     var color:UIColor = UIColor.blueColor()
+    // The number of waves
+    var nbWaves: Int = 1
 
     //MARK: Waves User controlled values
     // Percentage inside the gauge
@@ -100,7 +104,8 @@ class LiquidView: UIView {
             if (newValue != nil) {
                 datasourceRespondTo.waveFrequency = newValue!.respondsToSelector(Selector("waveFrequency:"))
                 datasourceRespondTo.waveAmplitude = newValue!.respondsToSelector(Selector("waveAmplitude:"))
-                datasourceRespondTo.gagugeValue = newValue!.respondsToSelector(Selector("gaugeValue:"))
+                datasourceRespondTo.gaugeValue = newValue!.respondsToSelector(Selector("gaugeValue:"))
+                datasourceRespondTo.numberOfWaves = newValue!.respondsToSelector(Selector("numberOfWaves:"))
             }
         }
     }
@@ -108,7 +113,8 @@ class LiquidView: UIView {
     struct datasourceMethodsCaching {
         var waveFrequency:Bool = false
         var waveAmplitude:Bool = false
-        var gagugeValue:Bool = false
+        var gaugeValue:Bool = false
+        var numberOfWaves: Bool = false
     }
     var datasourceRespondTo:datasourceMethodsCaching = datasourceMethodsCaching()
     
@@ -179,7 +185,10 @@ class LiquidView: UIView {
             if (self.datasourceRespondTo.waveAmplitude) {
                 self._amplitude = self.datasource!.waveAmplitude!(self)
             }
-            
+            if (self.datasourceRespondTo.numberOfWaves) {
+                self.nbWaves = self.datasource!.numberOfWaves!(self)
+            }
+
         }
         
         // constant calculated according to drawing constant (For future more scalable use)
@@ -198,10 +207,10 @@ class LiquidView: UIView {
         }
 
         var waveAlpha: CGFloat = 0.5
-        var nbWave = 2
-        nbWave--
-        while (nbWave >= 0) {
-            waveAlpha = CGFloat(1 - CGFloat(nbWave) / 5)
+        var nbWaveValue = self.nbWaves
+        nbWaveValue--
+        while (nbWaveValue >= 0) {
+            waveAlpha = CGFloat(1 - CGFloat(nbWaveValue) / 6)
             color.colorWithAlphaComponent(waveAlpha).set()
             
             let curve : CGMutablePathRef = CGPathCreateMutable()
@@ -218,10 +227,10 @@ class LiquidView: UIView {
                 
                 CGContextMoveToPoint(context, lastX, lastY)
                 let scaling: Float = -pow(1/mid*(x-mid),2)+1
-                let newPhase: Float = _phase + Float(nbWave) * 0.5
-                var y: Float = scaling * maxAmplitude * normedAmplitude * sinf(2.0 * Float(M_PI) * (x / width) * (_frequency + Float(nbWave) * 0.1) + newPhase) + vPosition + Float(currentPointYOffset)
+                let newPhase: Float = _phase + Float(nbWaveValue) * 0.3
+                var y: Float = scaling * maxAmplitude * normedAmplitude * sinf(2.0 * Float(M_PI) * (x / width) * _frequency + newPhase) + vPosition + Float(currentPointYOffset)
                 
-                y -= Float(nbWave) * Float(self.bounds.height) * 0.03
+                y -= Float(nbWaveValue) * Float(self.bounds.height) * 0.02
                 
                 CGPathAddLineToPoint(curve, nil, CGFloat(x+marginLeft), CGFloat(y))
                 let location: CGFloat = CGFloat(x / (width+_density))
@@ -234,7 +243,7 @@ class LiquidView: UIView {
             CGPathCloseSubpath(curve)
             CGContextAddPath(context, curve)
             CGContextFillPath(context)
-            nbWave--
+            nbWaveValue--
         }
     }
 

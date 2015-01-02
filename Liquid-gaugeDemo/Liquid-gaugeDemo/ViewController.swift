@@ -71,6 +71,10 @@ class ViewController: UIViewController, LiquidViewDelegate, LiquidViewDatasource
         return gaugeValue
     }
     
+    func numberOfWaves(liquidView: LiquidView) -> Int {
+        return 2
+    }
+    
     //MARK: - LiquidView Delegate
     func liquidView(liquidView: LiquidView, colorForPercent percent: Float) -> UIColor! {
         
