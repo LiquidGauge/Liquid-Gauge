@@ -74,12 +74,12 @@ class ViewController: UIViewController, LiquidViewDelegate, LiquidViewDatasource
     //MARK: - LiquidView Delegate
     func liquidView(liquidView: LiquidView, colorForPercent percent: Float) -> UIColor! {
         
-        var res = UIColor.greenColor()
+        var res = UIColor(red: 128/255, green: 180/255, blue: 43/255, alpha: 1.0)
         
         if (percent > 70.0) {
-            res = UIColor.redColor()
+            res = UIColor(red: 203/255, green: 38/255, blue: 38/255, alpha: 1.0)
         } else if (percent > 40.0) {
-            res = UIColor.orangeColor()
+            res = UIColor(red: 238/255, green: 133/255, blue: 29/255, alpha: 1.0)
         }
         
         return res
