@@ -196,38 +196,46 @@ class LiquidView: UIView {
         if (self.delegate != nil && self.delegateRespondTo.liquidViewColorForPercent) {
             self.color = (delegate!.liquidView!(self, colorForPercent: percent))
         }
-        
-        color.colorWithAlphaComponent(0.5).set()
 
-        let curve : CGMutablePathRef = CGPathCreateMutable()
-        CGPathMoveToPoint(curve, nil, CGFloat(marginLeft), CGFloat(vPosition))
-
-        var lastX : CGFloat = 0
-        var lastY : CGFloat = self.bounds.height / 2.0
-
-        let midPoint = ((width+_density) / 2)
-
-        for (var x:Float = 0;x<width+_density; x+=_density) {
-
-            let currentPointYOffset = (Float(midPoint) - Float(x)) * Float(drawingAngleConstant)
-
-            CGContextMoveToPoint(context, lastX, lastY)
-            let scaling: Float = -pow(1/mid*(x-mid),2)+1
-
-            let y: Float = scaling * maxAmplitude * normedAmplitude * sinf(2.0 * Float(M_PI) * (x / width) * _frequency + _phase) + vPosition + Float(currentPointYOffset)
-
-            CGPathAddLineToPoint(curve, nil, CGFloat(x+marginLeft), CGFloat(y))
-            let location: CGFloat = CGFloat(x / (width+_density))
-
-            CGContextStrokePath(context)
-            lastX = CGFloat(x + marginLeft)
-            lastY = CGFloat(y)
+        var waveAlpha: CGFloat = 0.5
+        var nbWave = 2
+        nbWave--
+        while (nbWave >= 0) {
+            waveAlpha = CGFloat(1 - CGFloat(nbWave) / 5)
+            color.colorWithAlphaComponent(waveAlpha).set()
+            
+            let curve : CGMutablePathRef = CGPathCreateMutable()
+            CGPathMoveToPoint(curve, nil, CGFloat(marginLeft), CGFloat(vPosition))
+            
+            var lastX : CGFloat = 0
+            var lastY : CGFloat = self.bounds.height / 2.0
+            
+            let midPoint = ((width+_density) / 2)
+            
+            for (var x:Float = 0;x<width+_density; x+=_density) {
+                
+                let currentPointYOffset = (Float(midPoint) - Float(x)) * Float(drawingAngleConstant)
+                
+                CGContextMoveToPoint(context, lastX, lastY)
+                let scaling: Float = -pow(1/mid*(x-mid),2)+1
+                let newPhase: Float = _phase + Float(nbWave) * 0.5
+                var y: Float = scaling * maxAmplitude * normedAmplitude * sinf(2.0 * Float(M_PI) * (x / width) * (_frequency + Float(nbWave) * 0.1) + newPhase) + vPosition + Float(currentPointYOffset)
+                
+                y -= Float(nbWave) * Float(self.bounds.height) * 0.03
+                
+                CGPathAddLineToPoint(curve, nil, CGFloat(x+marginLeft), CGFloat(y))
+                let location: CGFloat = CGFloat(x / (width+_density))
+                CGContextStrokePath(context)
+                lastX = CGFloat(x + marginLeft)
+                lastY = CGFloat(y)
+            }
+            CGPathAddLineToPoint(curve, nil, CGFloat(self.bounds.width) - CGFloat(marginRight), CGFloat(self.bounds.height))
+            CGPathAddLineToPoint(curve, nil, CGFloat(marginLeft), CGFloat(self.bounds.height))
+            CGPathCloseSubpath(curve)
+            CGContextAddPath(context, curve)
+            CGContextFillPath(context)
+            nbWave--
         }
-        CGPathAddLineToPoint(curve, nil, CGFloat(self.bounds.width) - CGFloat(marginRight), CGFloat(self.bounds.height))
-        CGPathAddLineToPoint(curve, nil, CGFloat(marginLeft), CGFloat(self.bounds.height))
-        CGPathCloseSubpath(curve)
-        CGContextAddPath(context, curve)
-        CGContextFillPath(context)
     }
 
 
