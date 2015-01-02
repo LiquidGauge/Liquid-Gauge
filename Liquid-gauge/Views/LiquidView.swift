@@ -136,7 +136,7 @@ class LiquidView: UIView {
     func updateDrawing() {
         let requiredTickes = 4
         tick = (tick+1)%requiredTickes
-        _phase += -Float(arc4random_uniform(150))/1000
+        _phase += -Float(arc4random_uniform(130))/1000
 
         var isNearlyEqual = abs(self.angleConstant - self.drawingAngleConstant)
         if (isNearlyEqual >= 0 && isNearlyEqual <= toAdd) {
