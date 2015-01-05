@@ -72,7 +72,7 @@ class ViewController: UIViewController, LiquidViewDelegate, LiquidViewDatasource
     }
     
     func numberOfWaves(liquidView: LiquidView) -> Int {
-        return 2
+        return 3
     }
     
     //MARK: - LiquidView Delegate

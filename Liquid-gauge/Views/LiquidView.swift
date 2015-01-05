@@ -142,7 +142,7 @@ class LiquidView: UIView {
     func updateDrawing() {
         let requiredTickes = 4
         tick = (tick+1)%requiredTickes
-        _phase += -Float(arc4random_uniform(130))/1000
+        _phase += -Float(arc4random_uniform(180))/1000
 
         var isNearlyEqual = abs(self.angleConstant - self.drawingAngleConstant)
         if (isNearlyEqual >= 0 && isNearlyEqual <= toAdd) {
@@ -264,12 +264,12 @@ class LiquidView: UIView {
     //MARK: - Utils
     func calcAngleConstant() {
         dispatch_sync(lockQueue) {
-            if (self.accelerometer != nil) {
-                if (Int(round(abs(self.accelerometer!.acceleration.z))) == 1) {
-                    //return slowly to "normal" state
-                    self.angleConstant = 0.0
-                    return
-                }
+//            if (self.accelerometer != nil) {
+//                if (Int(round(abs(self.accelerometer!.acceleration.z))) == 1) {
+//                    return slowly to "normal" state
+//                    self.angleConstant = 0.0
+//                    return
+//                }
 
                 var multiplier:Float = 1.0
                 if (self.accelerometer!.acceleration.x < 0) {
