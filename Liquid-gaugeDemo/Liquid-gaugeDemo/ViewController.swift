@@ -21,27 +21,37 @@ class ViewController: UIViewController, LiquidViewDelegate, LiquidViewDatasource
     var gaugeValue:Float = 50.0
     
     @IBOutlet weak var maskOne: UIImageView!
-    @IBOutlet weak var maskTwo: UIImageView!
+    @IBOutlet weak var numberOfWaves: UILabel!
     
-    @IBAction func noMaskTouch(sender: AnyObject) {
-        maskOne.alpha = 0.0
-        maskTwo.alpha = 0.0
+    @IBAction func maskSelection(sender: AnyObject) {
+        let segment : UISegmentedControl = sender as UISegmentedControl
+        switch segment.selectedSegmentIndex {
+        case 0:
+            maskOne.image = UIImage(named: "maskOne")
+            break
+        case 1:
+            maskOne.image = UIImage(named: "maskTwo")
+            break
+        case 2:
+            maskOne.image = nil
+            break
+        default:
+            break
+        }
     }
-    
-    @IBAction func maskOneTouch(sender: AnyObject) {
-        maskOne.alpha = 1.0
-        maskTwo.alpha = 0.0
-    }
-    
-    @IBAction func maskTwoTouch(sender: AnyObject) {
-        maskOne.alpha = 0.0
-        maskTwo.alpha = 1.0
+
+    @IBOutlet weak var stepper: UIStepper!
+    @IBAction func waveStepper(sender: UIStepper) {
+        numberOfWaves.text = "\(Int(sender.value))"
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         liquidView.delegate = self
         liquidView.datasource = self
+        
+        stepper.value = 3.0
+        numberOfWaves.text = "\(Int(stepper.value))"
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -72,7 +82,7 @@ class ViewController: UIViewController, LiquidViewDelegate, LiquidViewDatasource
     }
     
     func numberOfWaves(liquidView: LiquidView) -> Int {
-        return 3
+        return Int(stepper.value)
     }
     
     //MARK: - LiquidView Delegate
