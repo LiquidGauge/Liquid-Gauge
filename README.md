@@ -1,7 +1,7 @@
 Liquid Gauge
 ==============
 
-This library provides an **easy to use and fully customizable class to simulate liquid** in a view.
+This library provides an **easy to use and fully customizable class to simulate liquid and represent a percentage** in a view easyli.
 
 The view content is based on a percentage and is usable as a **gauge**.
 
@@ -18,9 +18,9 @@ Installation
 ----------------
 ### From CocoaPods
 
-####/!\ Not yet support by swift /!\
+####/!\ Not yet support by swift /!\  Cocoapod just released his beta. Integration in progress.
 
-The recommended approach for installating ```LiquidView``` is via the [CocoaPods](http://cocoapods.org/) package manager, as it provides flexible dependency management and dead simple installation:
+The recommended approach for installating ```LiquidGauge``` is via the [CocoaPods](http://cocoapods.org/) package manager, as it provides flexible dependency management and dead simple installation:
 
 ```bash
 $ [sudo] gem install cocoapods
@@ -34,7 +34,7 @@ $ touch Podfile
 $ edit Podfile
 ```
 
-Edit your Podfile and add LiquidView:
+Edit your Podfile and add LiquidGauge:
 
 ``` bash
 platform :ios, '7.0'
@@ -80,14 +80,14 @@ The **LiquidView class** provide the following methods
 func startMotion() -> Void
 ```
 Start the motion detection.
-Should be call in the ```viewDidAppear``` function.
+Should be call in the ```viewDidAppear``` or ```viewWillAppear``` function.
 Will simulate the **movement of the liquid** with the device orientation.
 
 ```
 func stopMotion() -> Void
 ```
 Stop the motion detection.
-Should be call in the ```viewDidDisappear``` function.
+Should be call in the ```viewDidDisappear``` or ```viewWillDisappear``` function.
 
 Delegate methods
 ----------------
@@ -103,44 +103,63 @@ func liquidView(liquidView: LiquidView, colorForPercent percent:Float) -> UIColo
 
 **Return value description**
 
-* An ```UIColor``` representing the color of the gauge liquid
+* An ```UIColor``` representing the color of the gauge liquid for the givent percent
 
 Datasource methods
 ----------------
 
-The ```LiquidView``` class implements a datasource protocol with the following **mandatory** method:
+### The ```LiquidView``` class implements a datasource protocol with the following **mandatory** method:
 
 ```func gaugeValue(liquidView: LiquidView) -> Float```
 
-Current value of the gauge in percent (%)
+**Return value description** 
+* Current value of the gauge in percent (%)
 
 **Parameters description**
 
 * ```liquidView``` The liquidView asking for the gauge level/value
 
 
-And the following **optional** methods:
+### And the following **optional** methods:
 
 ```func waveFrequency(liquidView: LiquidView) -> Float```
- 
-Frequency of the liquid's waves
+
+**Return value description** 
+* Frequency of the liquid's waves
  
 **Parameters description**
 
 * ```liquidView``` The liquidView asking for frequency of the liquid waves
 
 ```func waveAmplitude(liquidView: LiquidView) -> Float```
-  
-Size of the waves
+
+**Return value description** 
+* Size of the waves
  
 **Parameters description**
 
 * ```liquidView``` The liquidView asking for the size of the displayed waves
 
+```func numberOfWaves(liquidView: LiquidView) -> Int```
+
+**Return value description** 
+* Number of waves to display
+
+**Parameters description**
+* ```liquidView``` The liquidView asking for the number of waves to display
+
 
 Roadmap
 ----------------
-To be determined 
+###Current Version : 1.0
+
+***V1.0 :*** Initial Release.  
+
+***V1.1 :*** Add a list of possible effects to apply on the liquid.  
+***V1.2 :*** Update with user requests delegates methods  
+
+***V2.0 :*** Add full support of device orientation
+
 
 FAQ
 ----------------
@@ -156,7 +175,7 @@ This project require :
 Licence
 ----------------
 MIT Licence  
-Copyright (c) 2014 Benjamin BUSINARO <busina_b@epitech.eu>
+Copyright (c) 2014 Anas Ait-Ali, Thomas Avril, Benjamin Businaro, Thibault Carpentier.  <busina_b@epitech.eu>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -181,6 +200,7 @@ Repository Infos
 ----------------
 
     Owners:			Anas Ait-Ali
-    				Benjamin BUSINARO
+    				Thomas Avril
+    				Benjamin Businaro
     				Thibault Carpentier
  
