@@ -264,9 +264,9 @@ class LiquidView: UIView {
     //MARK: - Utils
     func calcAngleConstant() {
         dispatch_sync(lockQueue) {
-//            if (self.accelerometer != nil) {
+            if (self.accelerometer != nil) {
 //                if (Int(round(abs(self.accelerometer!.acceleration.z))) == 1) {
-//                    return slowly to "normal" state
+////                    return slowly to "normal" state
 //                    self.angleConstant = 0.0
 //                    return
 //                }
