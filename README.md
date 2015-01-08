@@ -13,6 +13,10 @@ The view should be used with a **mask** in front of it to simulate the container
 
 ScreenShots
 ----------------
+![ScreenShots](/Screenshots/no-mask.jpg?raw=true "Liquid Gauge without mask")
+![ScreenShots](/Screenshots/mask-1-1.jpg?raw=true "Liquid Gauge with circle mask")
+![ScreenShots](/Screenshots/mask-1-2.jpg?raw=true "Liquid Gauge with circle mask")
+![ScreenShots](/Screenshots/mask-2.jpg?raw=true "Liquid Gauge with thermometer mask")
 
 Installation
 ----------------
