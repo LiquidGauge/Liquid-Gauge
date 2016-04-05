@@ -1,6 +1,6 @@
 //
-//  LiquidView.swift
-//  Liquid-gaugeDemo
+//  LiquidGaugeView.swift
+//  LiquidGauge
 //
 //  Created by Anas Ait Ali on 02/12/14.
 //  Copyright (c) 2014 thanbeth. All rights reserved.
@@ -10,31 +10,31 @@ import UIKit
 import CoreMotion
 
 //MARK: - LiquidView Delegate
-@objc protocol LiquidViewDelegate : NSObjectProtocol {
+@objc protocol LiquidGaugeViewDelegate : NSObjectProtocol {
     
     // Return a color depending on the pencent value of the gauge
-    optional func liquidView(liquidView: LiquidView, colorForPercent percent:Float) -> UIColor!
+    optional func liquidView(liquidView: LiquidGaugeView, colorForPercent percent:Float) -> UIColor!
 }
 
 //MARK: - LiquidView Datasource
-@objc protocol LiquidViewDatasource : NSObjectProtocol {
+@objc protocol LiquidGaugeViewDatasource : NSObjectProtocol {
     
     // Frequency of the liquid's waves
-    optional func waveFrequency(liquidView: LiquidView) -> Float
-  
+    optional func waveFrequency(liquidView: LiquidGaugeView) -> Float
+    
     // Size of the waves
-    optional func waveAmplitude(liquidView: LiquidView) -> Float
-
+    optional func waveAmplitude(liquidView: LiquidGaugeView) -> Float
+    
     // Number of waves
-    optional func numberOfWaves(liquidView: LiquidView) -> Int
+    optional func numberOfWaves(liquidView: LiquidGaugeView) -> Int
     
     // Current value of the gauge in percent (%)
-    func gaugeValue(liquidView: LiquidView) -> Float
+    func gaugeValue(liquidView: LiquidGaugeView) -> Float
 }
 
 //MARK: -LiquidView Class
-class LiquidView: UIView {
-
+public class LiquidGaugeView: UIView {
+    
     //MARK: - Variables
     //MARK: - Timers
     // Timer used for update drawing
@@ -43,7 +43,7 @@ class LiquidView: UIView {
     // Update angle constant periodically so unvoluntary shaking is not taken in account
     var timerAccelerometer:NSTimer? = nil
     let refreshUpdateAccelerometerInterval:NSTimeInterval = 0.06
-
+    
     //MARK: Wave configuration
     // Limit refresh display and drawing, for performance
     var tick: Int = 0
@@ -57,7 +57,7 @@ class LiquidView: UIView {
     var color:UIColor = UIColor.blueColor()
     // The number of waves
     var nbWaves: Int = 1
-
+    
     //MARK: Waves User controlled values
     // Percentage inside the gauge
     var percent:Float = 50
@@ -66,7 +66,7 @@ class LiquidView: UIView {
         let motion = CMMotionManager()
         motion.gyroUpdateInterval = 0.1
         return motion
-        }()
+    }()
     // We store the accelerometer data to reuse later
     var accelerometer:CMAccelerometerData? = nil
     // We store the angle constant (This is calculated by the timerAccelerometer callback and used during drawing)
@@ -80,14 +80,14 @@ class LiquidView: UIView {
     }
     var drawingAngleConstant:Float = 0.0
     var toAdd:Float = 0.0
-
+    
     //MARK: concurential acces
     let lockQueue = dispatch_queue_create("com.test.accelerometerLock", nil)
-
+    
     //MARK: - Delegate
-    var delegate:LiquidViewDelegate? = nil {
+    var delegate:LiquidGaugeViewDelegate? = nil {
         willSet (value) {
-            if (value != nil && value!.respondsToSelector(Selector("liquidView:colorForPercent:"))) {
+            if (value != nil && value!.respondsToSelector(#selector(LiquidGaugeViewDelegate.liquidView(_:colorForPercent:)))) {
                 delegateRespondTo.liquidViewColorForPercent = true
             }
         }
@@ -97,19 +97,19 @@ class LiquidView: UIView {
         var liquidViewColorForPercent:Bool = false
     }
     var delegateRespondTo:delegateMethodCaching = delegateMethodCaching()
-
+    
     //MARK: - Datasource
-    var datasource:LiquidViewDatasource? = nil {
+    var datasource:LiquidGaugeViewDatasource? = nil {
         willSet (newValue) {
             if (newValue != nil) {
-                datasourceRespondTo.waveFrequency = newValue!.respondsToSelector(Selector("waveFrequency:"))
-                datasourceRespondTo.waveAmplitude = newValue!.respondsToSelector(Selector("waveAmplitude:"))
-                datasourceRespondTo.gaugeValue = newValue!.respondsToSelector(Selector("gaugeValue:"))
-                datasourceRespondTo.numberOfWaves = newValue!.respondsToSelector(Selector("numberOfWaves:"))
+                datasourceRespondTo.waveFrequency = newValue!.respondsToSelector(#selector(LiquidGaugeViewDatasource.waveFrequency(_:)))
+                datasourceRespondTo.waveAmplitude = newValue!.respondsToSelector(#selector(LiquidGaugeViewDatasource.waveAmplitude(_:)))
+                datasourceRespondTo.gaugeValue = newValue!.respondsToSelector(#selector(LiquidGaugeViewDatasource.gaugeValue(_:)))
+                datasourceRespondTo.numberOfWaves = newValue!.respondsToSelector(#selector(LiquidGaugeViewDatasource.numberOfWaves(_:)))
             }
         }
     }
-
+    
     struct datasourceMethodsCaching {
         var waveFrequency:Bool = false
         var waveAmplitude:Bool = false
@@ -122,33 +122,33 @@ class LiquidView: UIView {
     //MARK: - Life cycle
     func initialize() {
         // Starting accelerometer detection
-//        startMotionDetect() // We should let the user start motion dectection when he needs to -> save battery
-
+        //        startMotionDetect() // We should let the user start motion dectection when he needs to -> save battery
+        
         // Redo timers
         invalidateTimer(&timerRedraw)
         invalidateTimer(&timerAccelerometer)
-        timerRedraw = NSTimer.scheduledTimerWithTimeInterval(refreshRedrawInterval, target: self, selector: "updateDrawing", userInfo: nil, repeats: true)
-        timerAccelerometer = NSTimer.scheduledTimerWithTimeInterval(refreshUpdateAccelerometerInterval, target: self, selector: "calcAngleConstant", userInfo: nil, repeats: true)
-
+        timerRedraw = NSTimer.scheduledTimerWithTimeInterval(refreshRedrawInterval, target: self, selector: #selector(LiquidGaugeView.updateDrawing), userInfo: nil, repeats: true)
+        timerAccelerometer = NSTimer.scheduledTimerWithTimeInterval(refreshUpdateAccelerometerInterval, target: self, selector: #selector(LiquidGaugeView.calcAngleConstant), userInfo: nil, repeats: true)
+        
         self.setNeedsDisplay()
     }
     
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         super.awakeFromNib()
         initialize()
     }
-
+    
     //MARK: - Drawing
     func updateDrawing() {
         let requiredTickes = 4
         tick = (tick+1)%requiredTickes
         _phase += -Float(arc4random_uniform(180))/1000
-
-        var isNearlyEqual = abs(self.angleConstant - self.drawingAngleConstant)
+        
+        let isNearlyEqual = abs(self.angleConstant - self.drawingAngleConstant)
         if (isNearlyEqual >= 0 && isNearlyEqual <= toAdd) {
             self.drawingAngleConstant += toAdd
         }
-
+        
         if (tick == 0) {
             self.setNeedsDisplay()
         }
@@ -156,26 +156,26 @@ class LiquidView: UIView {
     
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
+    override public func drawRect(rect: CGRect) {
         super.drawRect(rect)
-        let context : CGContextRef = UIGraphicsGetCurrentContext()
-        let colorSpace : CGColorSpaceRef = CGColorSpaceCreateDeviceRGB()
+        let context : CGContextRef = UIGraphicsGetCurrentContext()!
+        let colorSpace : CGColorSpaceRef = CGColorSpaceCreateDeviceRGB()!
         let background = UIBezierPath(rect: rect)
-
+        
         UIColor(white: 0.97, alpha: 1).setFill()
         background.fill()
         
         drawWaves(rect, context: context, colorSpace: colorSpace)
     }
     
-
+    
     func drawWaves(rect: CGRect, context: CGContextRef, colorSpace: CGColorSpaceRef) {
         // Drawing constants
         let marginLeft: Float = 0
         let marginRight: Float = 0
         let _density: Float = 5.0
         let _lineWidth: Float = 2.0
-
+        
         
         if (self.datasource != nil) {
             self.percent = datasource!.gaugeValue(self)
@@ -188,27 +188,27 @@ class LiquidView: UIView {
             if (self.datasourceRespondTo.numberOfWaves) {
                 self.nbWaves = self.datasource!.numberOfWaves!(self)
             }
-
+            
         }
         
         // constant calculated according to drawing constant (For future more scalable use)
         let vPosition: Float = Float(self.bounds.height) - (Float(self.bounds.height) * percent / 100.0);
         let width: Float = Float(self.bounds.width) - marginLeft - marginRight;
         let mid: Float = width / 2.0;
-        let stepLength = _density / width;
-
+        _ = _density / width;
+        
         CGContextSetLineWidth(context, CGFloat(_lineWidth))
         let maxAmplitudePosition = (percent >= 50) ? vPosition : abs(vPosition - Float(self.bounds.height))
         let maxAmplitude: Float =  maxAmplitudePosition - Float(2 * _lineWidth)
         let normedAmplitude: Float = _amplitude
-
+        
         if (self.delegate != nil && self.delegateRespondTo.liquidViewColorForPercent) {
             self.color = (delegate!.liquidView!(self, colorForPercent: percent))
         }
-
+        
         var waveAlpha: CGFloat = 0.5
         var nbWaveValue = self.nbWaves
-        nbWaveValue--
+        nbWaveValue -= 1
         while (nbWaveValue >= 0) {
             waveAlpha = CGFloat(1 - CGFloat(nbWaveValue) / 6)
             color.colorWithAlphaComponent(waveAlpha).set()
@@ -243,18 +243,21 @@ class LiquidView: UIView {
             CGPathCloseSubpath(curve)
             CGContextAddPath(context, curve)
             CGContextFillPath(context)
-            nbWaveValue--
+            nbWaveValue -= 1
         }
     }
-
-
+    
+    
     // MARK: - Accelerometer methods
     func startMotionDetect() {
-        self.motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue(), withHandler:{(accelerometerData:CMAccelerometerData!, error:NSError!) in
-            dispatch_sync(self.lockQueue) {
-                self.accelerometer = accelerometerData
+        self.motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue(), withHandler:
+            {
+                (accelerometerData:CMAccelerometerData?, error:NSError?) -> Void in
+                dispatch_sync(self.lockQueue) {
+                    self.accelerometer = nil //accelerometerData
+                }
             }
-        })
+        )
     }
     
     func stopMotionDetect() {
@@ -265,19 +268,19 @@ class LiquidView: UIView {
     func calcAngleConstant() {
         dispatch_sync(lockQueue) {
             if (self.accelerometer != nil) {
-//                if (Int(round(abs(self.accelerometer!.acceleration.z))) == 1) {
-////                    return slowly to "normal" state
-//                    self.angleConstant = 0.0
-//                    return
-//                }
-
+                //                if (Int(round(abs(self.accelerometer!.acceleration.z))) == 1) {
+                ////                    return slowly to "normal" state
+                //                    self.angleConstant = 0.0
+                //                    return
+                //                }
+                
                 var multiplier:Float = 1.0
                 if (self.accelerometer!.acceleration.x < 0) {
                     multiplier = -1.0
                 }
-
-                var tmp = Float(abs(self.accelerometer!.acceleration.y)) * Float(100.0)
-                var intConstant = Int(tmp)
+                
+                let tmp = Float(abs(self.accelerometer!.acceleration.y)) * Float(100.0)
+                let intConstant = Int(tmp)
                 self.angleConstant =  (1 - (Float(intConstant) / 100))  * multiplier
             }
         }
@@ -286,7 +289,7 @@ class LiquidView: UIView {
     
     func invalidateTimer(inout timer:NSTimer?) -> Bool {
         var success:Bool = false
-
+        
         if (timer != nil && timer!.valid == true) {
             timer!.invalidate(); timer = nil
             success = true
@@ -294,4 +297,3 @@ class LiquidView: UIView {
         return success
     }
 }
-
